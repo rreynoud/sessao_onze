@@ -8,8 +8,16 @@
 
     <div class="container">
 
-      <router-link to="/" class="btn btn-info mb-2 mr-2"  > Inicio </router-link>
-      <router-link to="/contatos" class="btn btn-info mb-2 mr-2 "  >Contatos</router-link>
+      <router-link 
+            to="/" 
+            class="btn btn-info mb-2 mr-2"
+            exact
+            > Inicio </router-link>
+      <router-link 
+            to="/contatos" 
+            class="btn btn-info mb-2 mr-2 "
+            exact-active-class="active"            
+            >Contatos</router-link>
       <router-view></router-view>
 
     </div>
