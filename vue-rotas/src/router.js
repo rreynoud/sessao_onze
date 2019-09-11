@@ -7,7 +7,7 @@ import Home from './views/contatos/Home.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  mode:'history',
+//   mode:'history',
   linkActiveClass:'active',
   routes: [
     {path: '/contatos', component: Contatos}, //meus-contatos.com/contato
