@@ -69,15 +69,8 @@ export default {
     },
     methods:{
         salvar(event){
-
-
-            console.log('tarefa', this.tarefa);
-
             const operacao = this.tarefa == undefined  ? 'criar' : 'editar'
-
-
-            console.log('operacao ' + operacao );
-
+            
             this.$emit(operacao, this.tarefaLocal)
             this.tarefaLocal = { titulo: '', concluido: false } 
         }

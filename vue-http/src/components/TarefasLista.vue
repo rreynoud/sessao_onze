@@ -60,7 +60,7 @@ export default {
     },
     methods: {
         editarTarefa(tarefa){
-            axios.put(`${config.apiUrl}/tarefas`, tarefa).then((response) =>{
+            axios.put(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa).then((response) =>{
                 console.log('put tarefas ', response)
                 this.tarefas.push(response.data)
                 this.exibirFormulario = false
