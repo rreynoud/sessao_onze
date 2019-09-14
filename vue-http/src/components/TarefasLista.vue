@@ -1,18 +1,33 @@
 <template>
     <div>
-
-        <h1 class="font-weight-light">Lista de Tarefas</h1>
+        <div class="row">
+            <div class="col-sm-10">
+                <h1 class="font-weight-light">Lista de Tarefas</h1>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn brn-primary  float-right"
+                    @click="exibirFormulario=!exibirFormulario">
+                    <i class="fa fa-plus mr-2 "></i>    
+                    <span>Criar</span>
+                </button>
+            </div>  
+        </div>
 
         <ul class="list-group" v-if="tarefas.length > 0">
             <TarefasListaIten
                 v-for="tarefa in tarefas"
                 :key="tarefa.id"
-                :tarefa="tarefa" />
+                :tarefa="tarefa" 
+                @editar="selecionarTarefaParaEdicao"/>
         </ul>
 
         <p v-else>Nenhuma tarefa criada.</p>
 
-        <TarefaSalvar />
+        <TarefaSalvar 
+            v-if="exibirFormulario"
+            :tarefa="tarefaSelecionada"
+            @criar="criarTarefa"
+            @editar="editarTarefa"/>
 
     </div>
 </template>
@@ -32,9 +47,9 @@ export default {
     },
     data() {
         return {
-            tarefas: [
-                
-            ]
+            tarefas: [],
+            exibirFormulario: false,
+            tarefaSelecionada: undefined
         }
     },
     created(){
@@ -42,6 +57,26 @@ export default {
             console.log(response)
             this.tarefas = response['data']
         })
+    },
+    methods: {
+        editarTarefa(tarefa){
+            axios.put(`${config.apiUrl}/tarefas`, tarefa).then((response) =>{
+                console.log('put tarefas ', response)
+                this.tarefas.push(response.data)
+                this.exibirFormulario = false
+            })
+        },
+        criarTarefa(tarefa){
+            axios.post(`${config.apiUrl}/tarefas`, tarefa).then((response) =>{
+                console.log('Post tarefas ', response)
+                this.tarefas.push(response.data)
+                this.exibirFormulario = false
+            })
+        },
+        selecionarTarefaParaEdicao(tarefa){
+            this.tarefaSelecionada = tarefa
+            this.exibirFormulario = true
+        }
     }
 }
 </script>
