@@ -19,7 +19,8 @@
                 :key="tarefa.id"
                 :tarefa="tarefa" 
                 @editar="selecionarTarefaParaEdicao"
-                @deletar="deletarTarefa"/>
+                @deletar="deletarTarefa"
+                @concluir="editarTarefa"/>
         </ul>
 
         <p v-else>Nenhuma tarefa criada.</p>
