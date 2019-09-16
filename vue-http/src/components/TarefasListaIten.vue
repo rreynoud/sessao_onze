@@ -11,7 +11,9 @@
             @click="$emit('editar', tarefa)">
             <i class="fa fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-danger btn-sm" title="Deletar">
+        <button 
+            @click="$emit('deletar', tarefa)"
+            class="btn btn-danger btn-sm" title="Deletar">
             <i class="fa fa-trash"></i>
         </button>
     </li>

@@ -18,7 +18,8 @@
                 v-for="tarefa in tarefas"
                 :key="tarefa.id"
                 :tarefa="tarefa" 
-                @editar="selecionarTarefaParaEdicao"/>
+                @editar="selecionarTarefaParaEdicao"
+                @deletar="deletarTarefa"/>
         </ul>
 
         <p v-else>Nenhuma tarefa criada.</p>
@@ -62,21 +63,43 @@ export default {
         editarTarefa(tarefa){
             axios.put(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa).then((response) =>{
                 console.log('put tarefas ', response)
-                this.tarefas.push(response.data)
-                this.exibirFormulario = false
+                
+                const indice = this.tarefas.findIndex( t => t.id === tarefa.id)
+                this.tarefas.splice(indice, 1, response.data)
+                
+                this.resetar();
             })
         },
         criarTarefa(tarefa){
             axios.post(`${config.apiUrl}/tarefas`, tarefa).then((response) =>{
                 console.log('Post tarefas ', response)
                 this.tarefas.push(response.data)
-                this.exibirFormulario = false
+                
             })
+        },
+        deletarTarefa(tarefa){
+
+            const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.id}"? `)
+            if(confirmar){
+            axios.delete(`${config.apiUrl}/tarefas/${tarefa.id}`, tarefa).then((response) =>{
+                console.log('delete tarefas ', response)
+                
+                const indice = this.tarefas.findIndex( t => t.id === tarefa.id)
+                this.tarefas.splice(indice, 1)
+                
+                this.resetar();
+            })
+            }
+
+        },         
+        resetar(){
+            this.tarefaSelecionada = undefined
+            this.exibirFormulario = false ;
         },
         selecionarTarefaParaEdicao(tarefa){
             this.tarefaSelecionada = tarefa
             this.exibirFormulario = true
-        }
+        }       
     }
 }
 </script>
